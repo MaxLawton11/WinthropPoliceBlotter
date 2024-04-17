@@ -4,6 +4,7 @@ import requests
 
 URL = 'https://winthroptranscript.com/#/police-blotter/'
 
+# format number
 def fn(num):
     if isinstance(num, int):
         num = str(num)
@@ -12,6 +13,7 @@ def fn(num):
     else:
         return num
 
+# is valid url
 def ivu(url):
     try:
         response = requests.get(url, headers={ "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" })
