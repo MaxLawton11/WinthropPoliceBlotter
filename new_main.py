@@ -16,6 +16,9 @@ edges = ox.graph_to_gdfs(G, nodes=False)
 
 streets = {}
 for name, length in zip(edges['name'], edges['length'])  :
+
+    if f"{name}" == 'nan' :
+        continue
     
     if type(name) == type([]) :
         print(name, length)
@@ -26,7 +29,8 @@ for name, length in zip(edges['name'], edges['length'])  :
     else :
         streets[name] = length
 
-print(streets)
+for s in streets :
+    print(s, streets[s])
 
 
 # Identify the edges that correspond to the specific street
@@ -38,6 +42,10 @@ fig, ax = ox.plot_graph(G, show=False, close=False)
 
 def hs(s,c) :
     highlights.append( (edges[edges['name'] == s], c) )
+
+for s in streets :
+    print(s)
+    hs(f"{s}", 'purple')
 
 hs('Main Street', 'b')
 hs('Bartlett Road', 'r')
