@@ -17,20 +17,27 @@ edges = ox.graph_to_gdfs(G, nodes=False)
 streets = {}
 for name, length in zip(edges['name'], edges['length'])  :
 
+    # remove pesky nan
     if f"{name}" == 'nan' :
         continue
     
+    # nested names [Street1, Street2,... ]
     if type(name) == type([]) :
-        print(name, length)
-        continue
+        for sub_name in name :
+            if sub_name in streets :
+                streets[sub_name] += length
+            else :
+                # since these streets are part of a double node, if they don't exist on their own somewhere else on the map, \
+                # they can not be plotted independently due to not being a real street.
+                # we will add the lengths if they are a true, mappable, independent street, otherwise we don't/can't care about them.
+                pass
+        continue # end, no need to process normally 
 
-    if name in streets :
+    # for normal name in the list of names
+    if name in streets : # if they exsit in the dic, add on to the length
         streets[name] += length
-    else :
+    else : # if it does not exist, set the initial length
         streets[name] = length
-
-for s in streets :
-    print(s, streets[s])
 
 
 # Identify the edges that correspond to the specific street
