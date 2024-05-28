@@ -39,6 +39,7 @@ for name, length in zip(edges['name'], edges['length'])  :
         streets[name] = length
 
 
+# count all of the instances of crime in the crime log
 
 
 
@@ -60,7 +61,6 @@ def hs(s,c) :
     highlights.append( (edges[edges['name'] == s], c) )
 
 for s in streets :
-    print(s)
     color = random.choice(["b", "g", "r", "c", "m", "y", "k", "w"])
     hs(f"{s}", color)
 
