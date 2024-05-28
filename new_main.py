@@ -13,14 +13,21 @@ G = ox.graph_from_place(place_name, network_type='drive')
 # Get edges (streets) dataframe
 edges = ox.graph_to_gdfs(G, nodes=False)
 
-df = pd.DataFrame(
-    {
-        'name'   : edges['name'],
-        'length' : edges['length']
-    }
-)
 
-print(df)
+streets = {}
+for name, length in zip(edges['name'], edges['length'])  :
+    
+    if type(name) == type([]) :
+        print(name, length)
+        continue
+
+    if name in streets :
+        streets[name] += length
+    else :
+        streets[name] = length
+
+print(streets)
+
 
 # Identify the edges that correspond to the specific street
 highlights = []
