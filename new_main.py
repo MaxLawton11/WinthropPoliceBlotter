@@ -2,6 +2,8 @@ import random
 import osmnx as ox
 import matplotlib.pyplot as plt
 import pandas as pd
+from bs4 import BeautifulSoup
+import requests
 
 # download a map of the town
 # get the 'edges' (aka roads)
@@ -39,16 +41,44 @@ for name, length in zip(edges['name'], edges['length'])  :
         streets[name] = length
 
 
-# count all of the instances of crime in the crime log
+# find all of the police blotter urls
+# they were put in by hand, so there really isn't a system or pattern
+# this means that we basically need to try them all since 2009...
+urls_are_preprocessed = True
+if not urls_are_preprocessed :
+    # add code for finding urls later
+    exit("No URLs")
 
 
+# scrpae all of the events into one big csv file
+# go throught all of the found urls, and extract the events
+events_are_preprocessed = True
+if not events_are_preprocessed :
+    # add code for compliting events later
+    exit("No events")
+
+# count all of the instances of the street name in the events.csv file
+streets_crime_number={} # track amount of crimes per street
+with open("events.csv", "r") as file: #open the file
+    read = file.read()
+    read = read.replace('â', '').replace('€', '').replace('™','')
+
+    for srt in streets :
+        count = read.count(srt)
+        streets_crime_number[srt] = count
 
 
+streets_crime_per_length = {}
+max_crimes = 0
+for srt in streets :
+    cpl = streets_crime_number[srt]/streets[srt]
+    streets_crime_per_length[srt] = cpl
 
+    if cpl>max_crimes :
+        max_crimes = cpl
 
-
-
-
+for s in streets_crime_number :
+    print(s, streets_crime_number[s], streets_crime_per_length[s],  streets_crime_per_length[s]/max_crimes)
 
 
 # Identify the edges that correspond to the specific street
@@ -60,9 +90,48 @@ fig, ax = ox.plot_graph(G, show=False, close=False)
 def hs(s,c) :
     highlights.append( (edges[edges['name'] == s], c) )
 
+
+# def value_to_color(value):
+#     if not 0 <= value <= 1:
+#         raise ValueError("Value must be between 0 and 1")
+#     red = value
+#     green = 1 - value
+#     return (red, green, 0)
+
+
+# def value_to_color(value):
+#     """Returns an RGB color value transitioning from green (0) to yellow (0.5) to red (1) based on input value (0 to 1)."""
+#     if not 0 <= value <= 1:
+#         raise ValueError("Value must be between 0 and 1")
+#     if value <= 0.5:
+#         # Transition from green to yellow
+#         red = 2 * value
+#         green = 1
+#         blue = 0
+#     else:
+#         # Transition from yellow to red
+#         red = 1
+#         green = 2 * (1 - value)
+#         blue = 0
+#     return (red, green, blue)
+
+def value_to_color(value):
+    """Returns an RGB color value transitioning from green (0) to yellow (0.5) to red (1) based on input value (0 to 1)."""
+    if not 0 <= value <= 1:
+        raise ValueError("Value must be between 0 and 1")
+    if value <= 0.5:
+        # Transition from green to yellow
+        red = 2 * value
+        green = 1-red
+    else:
+        # Transition from yellow to red
+        green = 2 * (1 - value)
+        red = 1-green
+    return (red, green, 0)
+
 for s in streets :
-    color = random.choice(["b", "g", "r", "c", "m", "y", "k", "w"])
-    hs(f"{s}", color)
+    c = value_to_color( streets_crime_per_length[s]/max_crimes)
+    hs(f"{s}", c)
 
 for highlight, color in highlights :
     highlight.plot(ax=ax, linewidth=4, edgecolor=color)
