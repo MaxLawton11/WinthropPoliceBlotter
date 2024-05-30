@@ -58,27 +58,27 @@ if not events_are_preprocessed :
     exit("No events")
 
 # count all of the instances of the street name in the events.csv file
-streets_crime_number={} # track amount of crimes per street
+streets_incident_number={} # track amount of incidents per street
 with open("events.csv", "r") as file: #open the file
     read = file.read()
     read = read.replace('â', '').replace('€', '').replace('™','')
 
     for srt in streets :
         count = read.count(srt)
-        streets_crime_number[srt] = count
+        streets_incident_number[srt] = count
 
 
-streets_crime_per_length = {}
-max_crimes = 0
+streets_incident_per_length = {}
+max_incidents = 0
 for srt in streets :
-    cpl = streets_crime_number[srt]/streets[srt]
-    streets_crime_per_length[srt] = cpl
+    ipl = streets_incident_number[srt]/streets[srt]
+    streets_incident_per_length[srt] = ipl
 
-    if cpl>max_crimes :
-        max_crimes = cpl
+    if ipl>max_incidents :
+        max_incidents = ipl
 
-for s in streets_crime_number :
-    print(s, streets_crime_number[s], streets_crime_per_length[s],  streets_crime_per_length[s]/max_crimes)
+for s in streets_incident_number :
+    print(s, streets_incident_number[s], streets_incident_per_length[s],  streets_incident_per_length[s]/max_incidents)
 
 
 # Identify the edges that correspond to the specific street
@@ -130,7 +130,7 @@ def value_to_color(value):
     return (red, green, 0)
 
 for s in streets :
-    c = value_to_color( streets_crime_per_length[s]/max_crimes)
+    c = value_to_color( streets_incident_per_length[s]/max_incidents)
     hs(f"{s}", c)
 
 
