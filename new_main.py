@@ -133,6 +133,7 @@ for s in streets :
     c = value_to_color( streets_crime_per_length[s]/max_crimes)
     hs(f"{s}", c)
 
+
 for highlight, color in highlights :
     highlight.plot(ax=ax, linewidth=4, edgecolor=color)
 
