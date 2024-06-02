@@ -91,43 +91,21 @@ def hs(s,c) :
     highlights.append( (edges[edges['name'] == s], c) )
 
 
-# def value_to_color(value):
-#     if not 0 <= value <= 1:
-#         raise ValueError("Value must be between 0 and 1")
-#     red = value
-#     green = 1 - value
-#     return (red, green, 0)
-
-
-# def value_to_color(value):
-#     """Returns an RGB color value transitioning from green (0) to yellow (0.5) to red (1) based on input value (0 to 1)."""
-#     if not 0 <= value <= 1:
-#         raise ValueError("Value must be between 0 and 1")
-#     if value <= 0.5:
-#         # Transition from green to yellow
-#         red = 2 * value
-#         green = 1
-#         blue = 0
-#     else:
-#         # Transition from yellow to red
-#         red = 1
-#         green = 2 * (1 - value)
-#         blue = 0
-#     return (red, green, blue)
-
 def value_to_color(value):
     """Returns an RGB color value transitioning from green (0) to yellow (0.5) to red (1) based on input value (0 to 1)."""
     if not 0 <= value <= 1:
         raise ValueError("Value must be between 0 and 1")
     if value <= 0.5:
         # Transition from green to yellow
-        red = 2 * value
-        green = 1-red
+        red = 2 * value  # Increase red component more sharply
+        green = 1
+        blue = 0
     else:
         # Transition from yellow to red
-        green = 2 * (1 - value)
-        red = 1-green
-    return (red, green, 0)
+        red = 1
+        green = 2 * (1 - value)  # Decrease green component more gradually
+        blue = 0
+    return (red, green, blue)
 
 for s in streets :
     c = value_to_color( streets_incident_per_length[s]/max_incidents)
