@@ -8,7 +8,7 @@ def value_to_color(value):
     if value <= 0.5:
         # Transition from green to yellow
         red = 2 * value
-        green = 1
+        green = 1-red
         blue = 0
     else:
         # Transition from yellow to red
