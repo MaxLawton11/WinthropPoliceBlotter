@@ -98,12 +98,12 @@ def value_to_color(value):
     if value <= 0.5:
         # Transition from green to yellow
         red = 2 * value  # Increase red component more sharply
-        green = 1
+        green = 1-red
         blue = 0
     else:
         # Transition from yellow to red
-        red = 1
         green = 2 * (1 - value)  # Decrease green component more gradually
+        red = 1-green
         blue = 0
     return (red, green, blue)
 
