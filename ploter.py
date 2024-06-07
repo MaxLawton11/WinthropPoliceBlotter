@@ -2,13 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def value_to_color(value):
-    """Returns an RGB color value transitioning from green (0) to yellow (0.5) to red (1) based on input value (0 to 1)."""
-    if not 0 <= value <= 1:
-        raise ValueError("Value must be between 0 and 1")
     if value <= 0.5:
         # Transition from green to yellow
         red = 2 * value
-        green = 1-red
+        green = 1
         blue = 0
     else:
         # Transition from yellow to red
