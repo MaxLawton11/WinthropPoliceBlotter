@@ -90,7 +90,6 @@ fig, ax = ox.plot_graph(G, show=False, close=False)
 def hs(s,c) :
     highlights.append( (edges[edges['name'] == s], c) )
 
-
 def value_to_color(value):
     """Returns an RGB color value transitioning from green (0) to yellow (0.5) to red (1) based on input value (0 to 1)."""
     if not 0 <= value <= 1:
