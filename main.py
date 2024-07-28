@@ -68,6 +68,7 @@ with open("events.csv", "r") as file: #open the file
         streets_incident_number[srt] = count
 
 
+# find the most amount of inceidents on one street
 streets_incident_per_length = {}
 max_incidents = 0
 for srt in streets :
