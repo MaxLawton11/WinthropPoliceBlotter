@@ -107,11 +107,12 @@ def value_to_color(value):
         blue = 0
     return (red, green, blue)
 
+# loop though all of the streets and give a color
 for s in streets :
     c = value_to_color( streets_incident_per_length[s]/max_incidents)
     hs(f"{s}", c)
 
-
+# plot all of the streets
 for highlight, color in highlights :
     highlight.plot(ax=ax, linewidth=4, edgecolor=color)
 
